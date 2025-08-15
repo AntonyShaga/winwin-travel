@@ -59,7 +59,7 @@ const FilterPage = () => {
 				onClick={openModal}
 				className="px-4 py-2 bg-blue-500 text-white rounded-2xl hover:bg-blue-600"
 			>
-				{/*Open Filters*/}
+				{`Open Filters`}
 			</button>
 
 			<FilterModal
@@ -72,6 +72,11 @@ const FilterPage = () => {
 				closeModal={closeModal}
 				isSubmitting={isSubmitting}
 			/>
+
+			<h2 className="mt-6 font-bold text-lg">{`Selected Filters (Debug)`}</h2>
+			<pre className="bg-gray-100 p-4 rounded">
+				{JSON.stringify(filters, null, 2)}
+			</pre>
 		</div>
 	)
 }

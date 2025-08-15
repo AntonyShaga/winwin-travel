@@ -46,7 +46,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
 			>
 				<div className="relative w-full flex items-center justify-center border-b-2 border-[#B4B4B4] mb-16 pb-6.5">
 					<h2 className="font-inter font-medium text-[40px] leading-[40px] tracking-normal px-1 py-1 text-[#31393C]">
-						{/*Filter*/}
+						{`Filter`}
 					</h2>
 					<button
 						onClick={closeModal}
@@ -82,7 +82,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
 						onClick={handleClearFilters}
 						className="absolute right-0 cursor-pointer font-inter font-medium text-[16px] leading-[16px] tracking-[0em] text-center underline text-[#078691] px-4 py-2 rounded transition-colors duration-200 ease-in-out hover:text-[#7E7E7E] active:text-[#31393C]"
 					>
-						{/*Clear all parameters*/}
+						{`Clear all parameters`}
 					</button>
 				</div>
 			</div>
