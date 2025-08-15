@@ -1,6 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
+import { FilterItem } from 'src/shared/api/types/Filter'
 
-const fetchFilterData = async () => {
+interface FilterData {
+	filterItems: FilterItem[]
+}
+
+const fetchFilterData = async (): Promise<FilterData> => {
 	const res = await fetch('src/shared/temp/filterData.json')
 	if (!res.ok) {
 		throw new Error('Failed to fetch filter data')
@@ -9,7 +14,7 @@ const fetchFilterData = async () => {
 }
 
 export const useGetFilterData = () => {
-	return useQuery({
+	return useQuery<FilterData>({
 		queryKey: ['filterData'],
 		queryFn: fetchFilterData
 	})

@@ -25,7 +25,7 @@ The project must include a GitHub Action that automatically checks the code
 
 Types:
 
-- `FilterItem` — input data format from API / `filterData.json`
+- `FilterList` — input data format from API / `filterData.json`
 - `SearchRequestFilter` — output data format to be displayed on the homepage
 
 ### What technologies to use
