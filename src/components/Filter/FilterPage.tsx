@@ -1,55 +1,36 @@
-import { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useConfirmStore } from 'src/store/useConfirmStore'
+import { useFilterStore } from 'src/store/useFilterStore'
 
-import { useGetFilterData } from '@api/filters.ts'
+import { useGetFilterData } from '@api/filters'
 
-import FilterModal from '@components/Filter/FilterModal.tsx'
+import ConfirmModal from '@components/ConfirmModal'
+import FilterModal from '@components/Filter/FilterModal'
 
 const FilterPage = () => {
 	const { data, isLoading } = useGetFilterData()
-	const [searchParams, setSearchParams] = useSearchParams()
-	const isModalOpen = searchParams.get('modal') === 'true'
-	const filters = JSON.parse(searchParams.get('filters') || '{}')
-	const [isSubmitting, setIsSubmitting] = useState(false)
+	const {
+		isModalOpen,
+		tempFilters,
+		filters,
+		openModal,
+		closeModal,
+		toggleOption,
+		applyFilters,
+		clearFilters
+	} = useFilterStore()
+
+	const { open: openConfirm, close: closeConfirm } = useConfirmStore()
 
 	if (isLoading || !data) {
 		return <p>Loading filters...</p>
 	}
 
-	const openModal = () =>
-		setSearchParams({ ...Object.fromEntries(searchParams), modal: 'true' })
-
-	const closeModal = () => {
-		const params = Object.fromEntries(searchParams)
-		delete params.modal
-		setSearchParams(params)
-	}
-
-	const handleApply = () => {
-		setIsSubmitting(true)
-		setTimeout(() => {
-			setIsSubmitting(false)
-			closeModal()
-		}, 2000)
-	}
-
-	const handleClearFilters = () => {
-		const params = Object.fromEntries(searchParams)
-		delete params.filters
-		setSearchParams(params)
-	}
-
-	const toggleOption = (filterId: string, optionId: string) => {
-		const currentFilters = { ...filters }
-		const current = currentFilters[filterId] || []
-		if (current.includes(optionId)) {
-			currentFilters[filterId] = current.filter((id: string) => id !== optionId)
-		} else {
-			currentFilters[filterId] = [...current, optionId]
-		}
-		setSearchParams({
-			...Object.fromEntries(searchParams),
-			filters: JSON.stringify(currentFilters)
+	const handleApplyWithConfirm = () => {
+		closeModal()
+		openConfirm('Do you want to apply new filter', () => {
+			applyFilters(() => {
+				closeConfirm()
+			})
 		})
 	}
 
@@ -65,18 +46,19 @@ const FilterPage = () => {
 			<FilterModal
 				isOpen={isModalOpen}
 				data={data}
-				filters={filters}
+				filters={tempFilters}
 				toggleOption={toggleOption}
-				handleApply={handleApply}
-				handleClearFilters={handleClearFilters}
+				handleApply={handleApplyWithConfirm}
+				handleClearFilters={clearFilters}
 				closeModal={closeModal}
-				isSubmitting={isSubmitting}
 			/>
 
 			<h2 className="mt-6 font-bold text-lg">{`Selected Filters (Debug)`}</h2>
 			<pre className="bg-gray-100 p-4 rounded">
 				{JSON.stringify(filters, null, 2)}
 			</pre>
+
+			<ConfirmModal />
 		</div>
 	)
 }

@@ -1,7 +1,6 @@
 import React from 'react'
 
 import CloseIcon from '@icon/CloseIcon.tsx'
-import NetworkIcon from '@icon/NetworkIcon.tsx'
 import { FilterItem } from 'src/shared/api/types/Filter'
 
 import FilterList from '@components/Filter/FilterList.tsx'
@@ -17,7 +16,6 @@ interface FilterModalProps {
 	handleApply: () => void
 	handleClearFilters: () => void
 	closeModal: () => void
-	isSubmitting: boolean
 }
 
 const FilterModal: React.FC<FilterModalProps> = ({
@@ -27,9 +25,11 @@ const FilterModal: React.FC<FilterModalProps> = ({
 	toggleOption,
 	handleApply,
 	handleClearFilters,
-	closeModal,
-	isSubmitting
+	closeModal
 }) => {
+	if (!isOpen) {
+		return null
+	}
 	return (
 		<div
 			className={`fixed inset-0 flex items-center justify-center z-50 transition-opacity duration-300 ${
@@ -67,15 +67,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
 						onClick={handleApply}
 						className="relative px-18 py-6 bg-orange-600 hover:bg-orange-600/70 active:bg-orange-700 text-white rounded-2xl text-base leading-4 font-semibold text-center font-inter transition-colors duration-200 ease-in-out flex justify-center items-center"
 					>
-						{isSubmitting && (
-							<NetworkIcon
-								width={24}
-								height={24}
-								fill="white"
-								className="absolute left-4 animate-spin"
-							/>
-						)}
-						<span>{isSubmitting ? 'Apply filter' : 'Apply'}</span>
+						{`Apply`}
 					</button>
 
 					<button
