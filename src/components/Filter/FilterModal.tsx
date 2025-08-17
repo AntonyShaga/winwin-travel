@@ -4,6 +4,7 @@ import CloseIcon from '@icon/CloseIcon.tsx'
 import { FilterItem } from 'src/shared/api/types/Filter'
 
 import FilterList from '@components/Filter/FilterList.tsx'
+import Button from '@components/ui/Button.tsx'
 
 interface FilterData {
 	filterItems: FilterItem[]
@@ -27,12 +28,9 @@ const FilterModal: React.FC<FilterModalProps> = ({
 	handleClearFilters,
 	closeModal
 }) => {
-	if (!isOpen) {
-		return null
-	}
 	return (
 		<div
-			className={`fixed inset-0 flex items-center justify-center z-50 transition-opacity duration-300 ${
+			className={`fixed inset-0 flex items-center justify-center z-50 transition-opacity  duration-300 ${
 				isOpen
 					? 'opacity-100 pointer-events-auto'
 					: 'opacity-0 pointer-events-none'
@@ -48,12 +46,14 @@ const FilterModal: React.FC<FilterModalProps> = ({
 					<h2 className="font-inter font-medium text-[40px] leading-[40px] tracking-normal px-1 py-1 text-[#31393C]">
 						{`Filter`}
 					</h2>
-					<button
+					<Button
+						variant="icon"
 						onClick={closeModal}
-						className="absolute right-0 px-1 py-1 rounded-full cursor-pointer"
+						size="iconOnly"
+						className="absolute right-0"
 					>
 						<CloseIcon />
-					</button>
+					</Button>
 				</div>
 
 				<FilterList
@@ -63,19 +63,21 @@ const FilterModal: React.FC<FilterModalProps> = ({
 				/>
 
 				<div className="mt-auto relative w-full flex items-center justify-center">
-					<button
+					<Button
+						variant="primary"
 						onClick={handleApply}
-						className="relative px-18 py-6 bg-orange-600 hover:bg-orange-600/70 active:bg-orange-700 text-white rounded-2xl text-base leading-4 font-semibold text-center font-inter transition-colors duration-200 ease-in-out flex justify-center items-center"
+						className="px-18 py-6"
 					>
 						{`Apply`}
-					</button>
-
-					<button
+					</Button>
+					<Button
+						variant="outline"
+						size="sm"
 						onClick={handleClearFilters}
-						className="absolute right-0 cursor-pointer font-inter font-medium text-[16px] leading-[16px] tracking-[0em] text-center underline text-[#078691] px-4 py-2 rounded transition-colors duration-200 ease-in-out hover:text-[#7E7E7E] active:text-[#31393C]"
+						className={'absolute right-0'}
 					>
 						{`Clear all parameters`}
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>

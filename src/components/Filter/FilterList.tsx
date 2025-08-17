@@ -2,6 +2,8 @@ import React from 'react'
 
 import { FilterChooseOption, FilterItem } from 'src/shared/api/types/Filter'
 
+import CustomCheckbox from '@components/ui/CustomCheckbox.tsx'
+
 interface FilterListProps {
 	data: FilterItem[]
 	filters: Record<string, string[]>
@@ -38,17 +40,12 @@ const FilterList: React.FC<FilterListProps> = ({
 							}`}
 						>
 							{filter.options.map((option: FilterChooseOption) => (
-								<label
+								<CustomCheckbox
 									key={option.id}
-									className="flex items-center gap-4 min-w-[100px] max-w-[200px]"
-								>
-									<input
-										type="checkbox"
-										checked={filters[filter.id]?.includes(option.id) || false}
-										onChange={() => toggleOption(filter.id, option.id)}
-									/>
-									{option.name}
-								</label>
+									checked={filters[filter.id]?.includes(option.id) || false}
+									onChange={() => toggleOption(filter.id, option.id)}
+									label={option.name}
+								/>
 							))}
 						</div>
 					)}
