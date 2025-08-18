@@ -1,10 +1,14 @@
+import { useTranslation } from 'react-i18next'
+
 import { useConfirmStore } from 'src/store/useConfirmStore'
 import { useFilterStore } from 'src/store/useFilterStore'
 
 import { useGetFilterData } from '@api/filters'
 
 import ConfirmModal from '@components/ConfirmModal'
-import FilterModal from '@components/Filter/FilterModal'
+import FilterModal from '@components/FilterModal/FilterModal'
+import { LanguageSwitcher } from '@components/LanguageSwitcher.tsx'
+import Button from '@components/ui/Button.tsx'
 
 const FilterPage = () => {
 	const { data, isLoading } = useGetFilterData()
@@ -20,14 +24,14 @@ const FilterPage = () => {
 	} = useFilterStore()
 
 	const { open: openConfirm, close: closeConfirm } = useConfirmStore()
-
+	const { t } = useTranslation('filter')
 	if (isLoading || !data) {
 		return <p>Loading filters...</p>
 	}
 
 	const handleApplyWithConfirm = () => {
 		closeModal()
-		openConfirm('Do you want to apply new filter', () => {
+		openConfirm(() => {
 			applyFilters(() => {
 				closeConfirm()
 			})
@@ -36,12 +40,10 @@ const FilterPage = () => {
 
 	return (
 		<div className="text-lg">
-			<button
-				onClick={openModal}
-				className="px-4 py-2 bg-blue-500 text-white rounded-2xl hover:bg-blue-600"
-			>
-				{`Open Filters`}
-			</button>
+			<div className="flex items-center justify-around w-full">
+				<LanguageSwitcher />
+				<Button onClick={openModal}>{t('openFilters')}</Button>
+			</div>
 
 			<FilterModal
 				isOpen={isModalOpen}

@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 import CloseIcon from '@icon/CloseIcon.tsx'
 import NetworkIcon from '@icon/NetworkIcon.tsx'
 import { useConfirmStore } from 'src/store/useConfirmStore.ts'
@@ -6,7 +8,7 @@ import { useFilterStore } from 'src/store/useFilterStore.ts'
 import Button from '@components/ui/Button.tsx'
 
 const ConfirmModal = () => {
-	const { isOpen, message, onConfirm, close } = useConfirmStore()
+	const { isOpen, onConfirm, close } = useConfirmStore()
 	const { isSubmitting } = useFilterStore()
 
 	const handleConfirm = () => {
@@ -14,6 +16,8 @@ const ConfirmModal = () => {
 			onConfirm()
 		}
 	}
+
+	const { t } = useTranslation('filter')
 
 	return (
 		<div
@@ -30,7 +34,7 @@ const ConfirmModal = () => {
 			>
 				<div className="relative w-full flex items-center justify-center mb-16 pb-6.5">
 					<p className="font-inter font-medium text-[40px] leading-[40px] text-[#31393C]">
-						{message}
+						{t('confirmNewFilter')}
 					</p>
 					<Button
 						variant="icon"
@@ -50,7 +54,7 @@ const ConfirmModal = () => {
 						size={'lg'}
 					>
 						<p className="text-base font-semibold font-inter leading-3 text-center tracking-[0.03em]">
-							{`Use old filter`}
+							{t('oldFilter')}
 						</p>
 					</Button>
 					<Button
@@ -72,7 +76,7 @@ const ConfirmModal = () => {
 								isSubmitting ? '' : 'pl-[39px]'
 							}`}
 						>
-							{`Apply new filter`}
+							{t('newFilter')}
 						</p>
 					</Button>
 				</div>

@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { FilterChooseOption, FilterItem } from 'src/shared/api/types/Filter'
+import { useFilterTranslation } from 'src/shared/hooks/useFilterTranslation.ts'
 
 import CustomCheckbox from '@components/ui/CustomCheckbox.tsx'
 
@@ -15,6 +16,8 @@ const FilterList: React.FC<FilterListProps> = ({
 	filters,
 	toggleOption
 }) => {
+	const { translateFilter } = useFilterTranslation()
+
 	return (
 		<div className="flex-1 overflow-y-auto flex flex-col gap-8 pb-6">
 			{data.map(filter => (
@@ -23,9 +26,9 @@ const FilterList: React.FC<FilterListProps> = ({
 					className="border-b-2 border-[#B4B4B4] pb-6"
 				>
 					<h3 className="font-inter font-medium text-[24px] leading-[24px] tracking-[0em] mb-6">
-						{filter.name}
+						{translateFilter(filter.id)}
 					</h3>
-					{filter.options?.length && (
+					{filter.options?.length > 0 && (
 						<div
 							className={`flex flex-wrap gap-x-8 gap-y-2 ${
 								filter.options.length === 1 || filter.options.length === 2
@@ -44,7 +47,7 @@ const FilterList: React.FC<FilterListProps> = ({
 									key={option.id}
 									checked={filters[filter.id]?.includes(option.id) || false}
 									onChange={() => toggleOption(filter.id, option.id)}
-									label={option.name}
+									label={translateFilter(filter.id, option.id)}
 								/>
 							))}
 						</div>

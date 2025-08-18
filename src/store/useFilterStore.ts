@@ -11,7 +11,6 @@ interface FilterStore {
 	closeModal: () => void
 	toggleOption: (filterId: string, optionId: string) => void
 	applyFilters: (onSuccess?: () => void) => void
-	cancelApply: () => void
 	clearFilters: () => void
 }
 
@@ -38,6 +37,7 @@ export const useFilterStore = create(
 						: [...current, optionId]
 					return { tempFilters: { ...state.tempFilters, [filterId]: updated } }
 				}),
+			// The timeout is only for demonstration purposes
 			applyFilters: onSuccess => {
 				set({ isSubmitting: true })
 				setTimeout(() => {
@@ -50,12 +50,6 @@ export const useFilterStore = create(
 					}
 				}, 2000)
 			},
-			cancelApply: () =>
-				set(state => ({
-					tempFilters: { ...state.filters },
-					isModalOpen: true
-				})),
-
 			clearFilters: () => set({ filters: {}, tempFilters: {} })
 		}),
 		{
