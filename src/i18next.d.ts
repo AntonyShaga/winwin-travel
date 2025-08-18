@@ -1,6 +1,6 @@
 import 'i18next'
+import { resources } from 'src/shared/i18n/locales'
 
-import { resources } from '../public/locales'
 import { I18N_DEFAULT_NS } from './constants'
 
 declare module 'i18next' {
