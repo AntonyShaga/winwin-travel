@@ -42,7 +42,11 @@ export const useFilterStore = create(
 				set({ isSubmitting: true })
 				setTimeout(() => {
 					set(state => ({
-						filters: { ...state.tempFilters },
+						filters: Object.fromEntries(
+							Object.entries(state.tempFilters).filter(
+								([, arr]) => arr.length > 0
+							)
+						),
 						isSubmitting: false
 					}))
 					if (onSuccess) {
